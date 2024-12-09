@@ -34,6 +34,8 @@ Ultimately, it was observed that the process was flawed, and the cleaned data fr
 
 ![1733733862245](image/README/1733733862245.png)
 
+(Above Left: 2024 with neighborhood centroid data)								  (Above Right: 2016 clean kaggle data, visualized by Omri Goldstein [here](https://www.kaggle.com/code/drgilermo/dynamics-of-new-york-city-animation), see References)
+
 The original clean kaggle 2016 dataset was stored in a `s3` bucket to make access easier across machines [https://project4-nyctaxi.s3.us-east-1.amazonaws.com/train.csv&#39;]('https://project4-nyctaxi.s3.us-east-1.amazonaws.com/train.csv').
 
 ![1733734260167](image/README/1733734260167.png)
@@ -117,6 +119,7 @@ Class materials were used extensively for this assignment, as well as:
 * OpenAI. ChatGPT. [https://chat.openai.com](https://chat.openai.com)
 * Kaggle. NYC Taxi Trip Duration Competition Overview. [https://www.kaggle.com/competitions/nyc-taxi-trip-duration/overview](https://www.kaggle.com/competitions/nyc-taxi-trip-duration/overview)
 * Meg Risdal. New York City Taxi Trip Duration. https://kaggle.com/competitions/nyc-taxi-trip-duration, 2017. Kaggle.
+* Omri Goldstein. Dynamics of New York city - Animation. https://www.kaggle.com/code/drgilermo/dynamics-of-new-york-city-animation, 2017. Kaggle
 
 ## Usage
 
