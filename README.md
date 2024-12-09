@@ -146,4 +146,4 @@ The fully optimized model file is available in the `Output/` directory: (`Output
 
 Data privacy is a consideration with this dataset. The pickup and dropoff locations could potentially be sensitive information. None of the passengers personal information is available in the dataset. However, some of these data points could point to personal homes or other sensitive locations.
 
-Using private data from NYC TLC should be done with careful consideration of ownership. This project will not be monetized in anyway, and therefore falls within fair use. The data was also part of a kaggle competition and partially subject to it's rules.
+Using private data from NYC TLC should be done with careful consideration of ownership. This project will not be monetized in anyway, and therefore falls within fair use. The data was also part of a kaggle competition and subject to any of the competitions applicable laws, rules, or regulations.
