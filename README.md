@@ -40,11 +40,11 @@ The original clean kaggle 2016 dataset was stored in a `s3` bucket to make acces
 
 ## Methodology
 
-Once the ETL process was complete (the full process is documented in `project4_ETL.ipynb`) work on creating machine learning models could begin. Many different models were created and visualized including (but not limited to): RandomForest, KMeans, PCA, Linear Regression, among others. Valuable insight and investigation can be gleaned from these models. They can be found in `local_test_model.ipynb` and `Kushboo_file_collab.ipynb`:
+Once the ETL process was complete (the full process is documented in `project4_ETL.ipynb`) work on creating machine learning models could begin. Many different models were created and visualized including (but not limited to): RandomForest, KMeans, PCA, Linear Regression, among others. Valuable insight and investigation can be gleaned from these models. They can be found in `ml_1.ipynb` and `ml_2.ipynb`:
 
 ![1733726581571](image/README/1733726581571.png)![1733726689261](image/README/1733726689261.png)
 
-Next an attempt at a predictive neural network. This was done over many files. However the progression can be viewed from `nn_model.ipynb`, `spark_pandas_nn_model_optimized_colab.ipynb`, and finally `nn_model_optimization_full.ipynb`.
+Next an attempt at a predictive neural network. This was done over many files. However the progression can be viewed from `nn_model_stage1.ipynb`, `nn_model_stage3.ipynb`, and finally `nn_model_optimization_full.ipynb`.
 
 The first attempt at a neural network was done as a proof of concept on a local machine in the file `nn_model.ipynb`. This proved that it was possible and that the features of this dataset could indeed be trained to predict the target (trip duration). The results of this model were not great; the R-squared value wasn't even calculated, however the MAE of the model was about 564 seconds (about 9.4 minutes).
 
@@ -54,7 +54,7 @@ The next attempt at a deep neural network was down exclusively with Pyspark on C
 
 An R-squared value of -36% is very low. This means that the model predicts very poorly.
 
-The next step was to try using Pandas on Google Colab, instead of spark, to run the neural network model. This was done after success with Pandas in testing on local machines. However,  the results of the optimized neural network using Pandas Colab were not very good. The model could not very well, even in it's best iterations. The following is an image of the model at it's peak (`spark_pandas_nn_model_optimized_colab.ipynb`):![1733712740761](image/README/1733712740761.png)
+The next step was to try using Pandas on Google Colab, instead of spark, to run the neural network model. This was done after success with Pandas in testing on local machines. However,  the results of the optimized neural network using Pandas Colab were not very good. The model could not very well, even in it's best iterations. The following is an image of the model at it's peak (`nn_model_stage3.ipynb`):![1733712740761](image/README/1733712740761.png)
 
 The R-squared value of 61% in the training was the absolute best the was achieved through optimization in Colab. However, when that model was evaluated with the test data the results were dismal:
 
@@ -80,7 +80,7 @@ Next, PCA was used to get an idea of these clusters. The PCA model indeed show c
 
 ![1733727577263](image/README/1733727577263.png)
 
-Next (in `Kushboo_file_collab.ipynb`), we can KMeans clusters of pickup and dropoff locations. These look quite a bit like the island of Manhattan and the surrounding area. There is a very high density of point in Manhattan, although there are noticeable clusters farther away. These are confirmed to be local airports JFK and LaGuardia; it makes sense that cabs are driving to the airport. These airport clusters could be contributing to the outliers, although it does not take 20+ hours to drive to JFK from Manhattan.
+Next (in `ml_2.ipynb`), we can KMeans clusters of pickup and dropoff locations. These look quite a bit like the island of Manhattan and the surrounding area. There is a very high density of point in Manhattan, although there are noticeable clusters farther away. These are confirmed to be local airports JFK and LaGuardia; it makes sense that cabs are driving to the airport. These airport clusters could be contributing to the outliers, although it does not take 20+ hours to drive to JFK from Manhattan.
 
 ![1733727809952](image/README/1733727809952.png)
 
@@ -98,7 +98,7 @@ Notice the `r_squared` value is still gradually improving. It is reasonable to b
 
 Using a big dataset it hard; this dataset had over 1.4 million rows. Numerous different strategies were used to wrangle this data, and surprisingly Pandas on a local machine performed the best. Google Colab, while a great resource, really struggled with creating a neural network.
 
-The MAE (Mean Average Error) of the optimized neural network model (`nn_model_optimization.ipynb`) shows 158 seconds: that's about 2.6 minutes. That means that the model will be right at predicting within about 2-3 minutes. From an anecdotal stand-point, that's not so bad. Being able to predict the trip duration within about 2-3 minutes might be valuable for passengers and drivers.
+The MAE (Mean Average Error) of the optimized neural network model (`nn_model_optimization_full.ipynb`) shows 158 seconds: that's about 2.6 minutes. That means that the model will be right at predicting within about 2-3 minutes. From an anecdotal stand-point, that's not so bad. Being able to predict the trip duration within about 2-3 minutes might be valuable for passengers and drivers.
 
 As you can see in this heatmap, the model is more powerful in its predictions for certain durations:
 
@@ -120,25 +120,30 @@ Class materials were used extensively for this assignment, as well as:
 
 ## Usage
 
-Given the size of this project, one large script file is impractical. This repo contains several files (aside from the README) that document the process of this project.
+Given the size of this project, one large script file is impractical. This repo contains several files (aside from the README) that document the process of this project. For ease of use the files are divided into folders for categories.
 
-The ETL file:                           `project4_ETL.ipynb`
+* ETL file:                           `ETL/`                        > `project4_ETL.ipynb`
+* Machine Learning files : `machine_learning/`   > `ml_1.ipynb`, `ml_2.ipynb`
+* Neural Network files:     `nn_model/`                > `nn_model_stage1.ipynb`, `nn_model_stage2` , `nn_model_stage3.ipynb`, `nn_model_stage4`,  `nn_model_optimization_full.ipynb`
+* Model Ouput file:	       `Output`                     > `model.keras`
 
-The Machine Learning files: `local_test_model.ipynb`, `Kushboo_file_collab.ipynb`
+The machine learning files are as follows:
 
-The Neural Network files:    `nn_model.ipynb`, `nn_model_optimized_colab`, `spark_pandas_nn_model_optimized_colab.ipynb`, `nn_model_optimization_full.ipynb`
-
-Model Ouput file:		     `model.keras`
+* `ml_1` - Linear Regression, PCA, RandomForest
+* `ml_2` - KMeans, XGBoost Regressor
 
 The neural network files follow a path of optimization:
 
-1. Initial phase: `nn_model.ipynb`
-2. Colab spark optimization: `nn_model_optimized_colab`
-3. Colab Pandas optimization: `spark_pandas_nn_model_optimized_colab.ipynb`
-4. Final Pandas optimization: `nn_model_optimization_full.ipynb`
+1. Initial phase:                          `nn_model_stage1.ipynb`
+2. Pandas quick optimization:   `nn_model_stage2.ipynb`
+3. Colab spark optimization:     `nn_model_stage3.ipynb`
+4. Colab Pandas optimization:  `nn_model_stage4.ipynb`
+5. Final Pandas optimization:    `nn_model_optimization_full.ipynb`
+
+The fully optimized model file is available in the `Output/` directory: (`Output/model.keras`)
 
 ## Ethical Considerations
 
-Data privacy is a consideration with this dataset. The pickup and dropoff locations could potentially be sensitive information. None of the passengers personal information is available in the dataset however, some of these data points could point to personal homes or other sensitive locations.
+Data privacy is a consideration with this dataset. The pickup and dropoff locations could potentially be sensitive information. None of the passengers personal information is available in the dataset. However, some of these data points could point to personal homes or other sensitive locations.
 
-Using private data from NYC TLC should be done with careful consideration of ownership. This project will not be monetized in anyway, and therefore falls within fair use. The data was also part of a kaggle competition and subject to
+Using private data from NYC TLC should be done with careful consideration of ownership. This project will not be monetized in anyway, and therefore falls within fair use. The data was also part of a kaggle competition and partially subject to it's rules.
