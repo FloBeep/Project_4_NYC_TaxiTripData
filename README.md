@@ -8,7 +8,7 @@ Welcome to the README for Group 4, Project 4!
 
 This project looks at using machine learning to create predictive models of a 2016 New York City taxi trip [dataset](https://www.kaggle.com/competitions/nyc-taxi-trip-duration/overview). It uses a cleaned dataset from kaggle (discussed in Data section) to try to answer questions about hotspots for taxis (time and locations), as well as trying to predict the duration of trips.
 
-This project contains an ETL section, where data is extracted transformed and loaded (see Data section). It contains a machine learning section, including clustering (for hot spots) and linear regression (for predicting trip duration) models. Finally in contains  a neural network section (to predict trip duration).
+This project contains an ETL section, where data is extracted transformed and loaded (see Data section). It contains a machine learning section, including clustering (for hot spots) and linear regression (for predicting trip duration) models. Finally in contains a neural network section (to predict trip duration).
 
 ## Data
 
@@ -30,7 +30,7 @@ Initial investigation of the data showed that it might be possible to create an 
 
 (Above: Extracting centroid of polygon - the middle of the neighborhood in a single point.)
 
-Ultimately, it was observed that the process was flawed, and the cleaned data from the 2016 competition contained supplemental information that was not publicly avaible on either kaggle or the NYC taxi site. The clean kaggle data from the competition contained exact coordinates for taxi rides, whereas the publicly available data from NYC TLC only contained information about the neighborhood of the rides (no precise coordinates).
+Ultimately, it was observed that the process was flawed, and the cleaned data from the 2016 competition contained supplemental information that was not publicly available on either kaggle or the NYC taxi site. The clean kaggle data from the competition contained exact coordinates for taxi rides, whereas the publicly available data from NYC TLC only contained information about the neighborhood of the rides (no precise coordinates).
 
 ![1733733862245](image/README/1733733862245.png)
 
@@ -52,17 +52,17 @@ The first attempt at a neural network was done as a proof of concept on a local 
 
 ![1733727103479](image/README/1733727103479.png)
 
-The next attempt at a deep neural network was down exclusively with Pyspark on Colab. This model an be found in `nn_model_optimized_colab`. This model has very similar hyperparameters to the following two. However, this model performed the worst of any of them. The proof of concept is there; then entire loading, preprocessing and model are done with Pyspark on Google Colab. The results were poor:![1733724070783](image/README/1733724070783.png)
+The next attempt at a deep neural network was down exclusively with Pyspark on Colab. This model can be found in `nn_model_stage3`. This model has very similar hyperparameters to the following two. However, this model performed the worst of any of them. The proof of concept is there; then entire loading, preprocessing and model are done with Pyspark on Google Colab. The results were poor:![1733724070783](image/README/1733724070783.png)
 
 An R-squared value of -36% is very low. This means that the model predicts very poorly.
 
-The next step was to try using Pandas on Google Colab, instead of spark, to run the neural network model. This was done after success with Pandas in testing on local machines. However,  the results of the optimized neural network using Pandas Colab were not very good. The model could not very well, even in it's best iterations. The following is an image of the model at it's peak (`nn_model_stage3.ipynb`):![1733712740761](image/README/1733712740761.png)
+The next step was to try using Pandas on Google Colab, instead of spark, to run the neural network model. This was done after success with Pandas in testing on local machines. However, the results of the optimized neural network using Pandas Colab were not very good. The model could not do very well, even in its best iterations. The following is an image of the model at its peak (`nn_model_stage4.ipynb`):![1733712740761](image/README/1733712740761.png)
 
 The R-squared value of 61% in the training was the absolute best the was achieved through optimization in Colab. However, when that model was evaluated with the test data the results were dismal:
 
 ![1733712831319](image/README/1733712831319.png)
 
-The mean average error here is 723 seconds (that's about 12 minutes). That is not a very estimate for trip duration. Even worse is the R2 score of -2.63%, that's worse than prediting the mean of the target variable. The mean squared error is 720,807 indicating a huge variance between predictions and actual values. This model was essentially a failure.  After failing to create a predictive model on Google Colab (with Spark or Pandas), the strategy shifted to creating a model on local machines using Pandas.
+The mean average error here is 723 seconds (that's about 12 minutes). That is not a very estimate for trip duration. Even worse is the R2 score of -2.63%, that's worse than predicting using only the mean of the target variable. The mean squared error is 720,807 indicating a huge variance between predictions and actual values. This model was essentially a failure.  After failing to create a predictive model on Google Colab (with Spark or Pandas), the strategy shifted to creating a model on local machines using Pandas.
 
 Some research, investigation, and testing has shown that perhaps running neural networks on Google Colab was not the best choice. Google Colab can throttle resources and be unreliable for large tasks with large datasets. When running the model on a local machine the difference was immediately noticeable.
 
@@ -78,11 +78,11 @@ The results of the machine learning models in `ml_1.ipynb` and `ml_2.ipynb` show
 
 This clearly shows some obvious clusters and outliers. Most trips in the data are less than 5,000 seconds long. However, there are many outliers and even an irregular cluster of durations above 80,000 seconds (more than 20 hours). This seems extremely unlikely for regular taxi traffic.
 
-Next, PCA was used to get an idea of these clusters. The PCA model indeed show clear groups or clusters of features. Although PCA can be a little opaque (it's not clear exactly which features are being included here), it's helpful to know that these clusters exist. It confirms that this data is not normally distributed.
+Next, PCA was used to get an idea of these clusters. The PCA model indeed shows clear groups or clusters of features. Although PCA can be a little opaque (it's not clear exactly which features are being included here), it's helpful to know that these clusters exist. It confirms that this data is not normally distributed.
 
 ![1733727577263](image/README/1733727577263.png)
 
-Next (in `ml_2.ipynb`), we can KMeans clusters of pickup and dropoff locations. These look quite a bit like the island of Manhattan and the surrounding area. There is a very high density of point in Manhattan, although there are noticeable clusters farther away. These are confirmed to be local airports JFK and LaGuardia; it makes sense that cabs are driving to the airport. These airport clusters could be contributing to the outliers, although it does not take 20+ hours to drive to JFK from Manhattan.
+Next (in `ml_2.ipynb`), we can KMeans clusters of pickup and dropoff locations. These look quite a bit like the island of Manhattan and the surrounding area. There is a very high density of point in Manhattan, although there are noticeable clusters farther away. These are confirmed to be local airports JFK and LaGuardia; it makes sense that cabs drive to the airport. These airport clusters could be contributing to the outliers, although it does not take 20+ hours to drive to JFK from Manhattan.
 
 ![1733727809952](image/README/1733727809952.png)
 
@@ -100,13 +100,13 @@ Notice the `r_squared` value is still gradually improving. It is reasonable to b
 
 Using a big dataset it hard; this dataset had over 1.4 million rows. Numerous different strategies were used to wrangle this data, and surprisingly Pandas on a local machine performed the best. Google Colab, while a great resource, really struggled with creating a neural network.
 
-The MAE (Mean Average Error) of the optimized neural network model (`nn_model_optimization_full.ipynb`) shows 158 seconds: that's about 2.6 minutes. That means that the model will be right at predicting within about 2-3 minutes. From an anecdotal stand-point, that's not so bad. Being able to predict the trip duration within about 2-3 minutes might be valuable for passengers and drivers.
+The MAE (Mean Average Error) of the optimized neural network model (`nn_model_optimization_full.ipynb`) shows 158 seconds: that's about 2.6 minutes. That means that the model will be right at predicting within about 2-3 minutes. From an anecdotal standpoint, that's not so bad. Being able to predict the trip duration within about 2-3 minutes might be valuable for passengers and drivers.
 
 As you can see in this heatmap, the model is more powerful in its predictions for certain durations:
 
 ![1733728538106](image/README/1733728538106.png)
 
-If the trip is very short or long the model will have difficulty predicting the trip duration. However, it does have a sweet spot that predicts well.
+If the trip is very short or long the model will have difficulty predicting the trip duration. However, it does have a sweet spot that predicts well; trips between 500-100 seconds long (about 8-16 minutes) are predicted well. A lot of standard cab rides are around that length. This model is good at predicting normal short trip durations.
 
 ![1733728695913](image/README/1733728695913.png)
 
@@ -126,7 +126,7 @@ Class materials were used extensively for this assignment, as well as:
 Given the size of this project, one large script file is impractical. This repo contains several files (aside from the README) that document the process of this project. For ease of use the files are divided into folders for categories.
 
 * ETL file:                           `ETL/`                        > `project4_ETL.ipynb`
-* Machine Learning files : `machine_learning/`   > `ml_1.ipynb`, `ml_2.ipynb`
+* Machine Learning files:  `machine_learning/`   > `ml_1.ipynb`, `ml_2.ipynb`
 * Neural Network files:     `nn_model/`                > `nn_model_stage1.ipynb`, `nn_model_stage2` , `nn_model_stage3.ipynb`, `nn_model_stage4`,  `nn_model_optimization_full.ipynb`
 * Model Ouput file:	       `Output`                     > `model.keras`
 
@@ -147,6 +147,6 @@ The fully optimized model file is available in the `Output/` directory: (`Output
 
 ## Ethical Considerations
 
-Data privacy is a consideration with this dataset. The pickup and dropoff locations could potentially be sensitive information. None of the passengers personal information is available in the dataset. However, some of these data points could point to personal homes or other sensitive locations.
+Data privacy is a consideration with this dataset. The pickup and drop-off locations could potentially be sensitive information. None of the passengers' personal information is available in the dataset. However, some of these data points could point to personal homes or other sensitive locations.
 
-Using private data from NYC TLC should be done with careful consideration of ownership. This project will not be monetized in anyway, and therefore falls within fair use. The data was also part of a kaggle competition and subject to any of the competitions applicable laws, rules, or regulations.
+Using private data from NYC TLC should be done with careful consideration of ownership. This project will not be monetized in any way, and therefore falls within fair use. The data was also part of a kaggle competition and subject to any of the competition's applicable laws, rules, or regulations.
