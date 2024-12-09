@@ -70,7 +70,9 @@ The results of running the model on a local machine using Pandas follows in the 
 
 ### Machine Learning Models
 
-The results of the machine learning models in `local_test_model.ipynb` and `Kushboo_file_collab.ipynb` show trends and outliers in the data. Take for example the linear regression here:![1733727315043](image/README/1733727315043.png)
+The results of the machine learning models in `ml_1.ipynb` and `ml_2.ipynb` show trends and outliers in the data. Take for example the linear regression in `ml_1` here:
+
+![1733727315043](image/README/1733727315043.png)
 
 This clearly shows some obvious clusters and outliers. Most trips in the data are less than 5,000 seconds long. However, there are many outliers and even an irregular cluster of durations above 80,000 seconds (more than 20 hours). This seems extremely unlikely for regular taxi traffic.
 
